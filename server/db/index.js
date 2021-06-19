@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const connection =
-  "mongodb+srv://HSAdmin:ElKcKLYKI7ELqqW0@hs-cluster.rxjry.mongodb.net/hs-cluster?retryWrites=true&w=majority";
+const connection = "";
 
 mongoose
   .connect(connection, { useNewUrlParser: true, useUnifiedTopology: true })
