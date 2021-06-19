@@ -5,6 +5,7 @@ const app = express();
 const apiPort = 9000;
 
 const db = require("./db");
+const userRouter = require("./routes/user-router");
 
 var corsOptions = {
   origin: "http://localhost:9001",
@@ -13,18 +14,13 @@ var corsOptions = {
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 app.use(express.json());
+
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to Happy Sapling!");
 });
 
-/* app.get("/api/users", (req, res) => {
-  res.send([1, 2, 3]);
-});
-
-app.get("/api/posts/:year/:month", (req, res) => {
-  res.send(req.query);
-}); */
+app.use("/api", userRouter);
 
 app.listen(apiPort, () => console.log(`listening on port ${apiPort}...`));
