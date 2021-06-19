@@ -18,7 +18,8 @@ createUser = async (req, res) => {
   const user = new User({
     firstName: body.firstName,
     lastName: body.lastName,
-    password: bcrypt.hashSync(req.body.password, 8),
+    email: body.email,
+    password: bcrypt.hashSync(body.password, 8),
     confirmationCode: token,
   });
 
@@ -38,7 +39,7 @@ createUser = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       error,
-      message: "User not created!",
+      message: "User was not created",
     });
   }
 };
@@ -57,13 +58,12 @@ updateUser = async (req, res) => {
     if (err) {
       return res.status(404).json({
         err,
-        message: "user not found!",
+        message: "User not found!",
       });
     }
     user.firstName = body.firstName;
     user.lastName = body.lastName;
     user.email = body.email;
-    user.password = body.password;
 
     try {
       await user.save();
@@ -144,7 +144,7 @@ signIn = async (req, res) => {
 
     if (user.status != "Active") {
       return res.status(403).send({
-        message: "Pending Account. Please verify your email.",
+        message: "Pending Account. Please verify your email!",
       });
     }
 
@@ -169,7 +169,7 @@ verifyUser = async (req, res, next) => {
     .then((user) => {
       console.log(user);
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "User not found." });
       }
       user.status = "Active";
       user.save((err) => {
