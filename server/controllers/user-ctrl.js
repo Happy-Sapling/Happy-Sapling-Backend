@@ -18,11 +18,10 @@ createUser = async (req, res) => {
   const user = new User({
     firstName: body.firstName,
     lastName: body.lastName,
-    email: body.email,
-    password: bcrypt.hashSync(body.password, 8),
-
+    password: bcrypt.hashSync(req.body.password, 8),
     confirmationCode: token,
   });
+
   if (!user) {
     return res.status(400).json({ success: false, error: err });
   }
