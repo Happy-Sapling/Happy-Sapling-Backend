@@ -48,7 +48,7 @@ updateJournal = async (req, res) => {
       });
     }
     journal.date = body.date;
-    jounral.submission = body.submission;
+    journal.submission = body.submission;
 
     try {
       await journal.save();
